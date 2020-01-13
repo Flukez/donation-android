@@ -1,23 +1,33 @@
 package com.example.donation;
 
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.example.donation.ModelClasses.UserInformation;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnMarkerClickListener {
 
-    private Marker mBangkok;
-    private Marker mChiangMai;
     private GoogleMap mMap;
+    private ChildEventListener mChildEventListner;
+    private DatabaseReference mUsers;
+    Marker marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        ChildEventListener mChildEventListner;
+        mUsers = FirebaseDatabase.getInstance().getReference("place");
+        mUsers.push().setValue(marker);
     }
 
 
@@ -42,27 +55,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        float zoomLevel = 5.0f;
-        // Add a marker in Sydney and move the camera
-        LatLng ChiangMai = new LatLng(18.793928, 98.956477);
-        LatLng Bangkok = new LatLng(13.724713, 100.633111);
-        mChiangMai = mMap.addMarker(new MarkerOptions().position(ChiangMai).title("Marker in ChiangMai"));
-        mBangkok = mMap.addMarker(new MarkerOptions().position(Bangkok).title("Marker in Bangkok"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ChiangMai, zoomLevel));
-        mChiangMai.setTag(0);
-        mBangkok.setTag(0);
-        mMap.setOnMarkerClickListener(this);
+        googleMap.setOnMarkerClickListener(this);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot s : dataSnapshot.getChildren()){
+                    UserInformation user = s.getValue(UserInformation.class);
+                    LatLng location=new LatLng(user.latitude,user.longitude);
+                    mMap.addMarker(new MarkerOptions().position(location).title(user.name)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Integer clickCount = (Integer)marker.getTag();
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            Toast.makeText(this,marker.getTitle()+"has been clicked" + clickCount + "times.",Toast.LENGTH_LONG).show();
-        }
         return false;
     }
 }

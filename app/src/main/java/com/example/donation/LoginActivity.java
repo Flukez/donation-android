@@ -18,6 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
@@ -25,11 +31,18 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        final DatabaseReference dbrefUser = FirebaseDatabase.getInstance().getReference("users");
+
         //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance(); //****////
+
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -44,10 +57,11 @@ public class LoginActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btn_reset_password);
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -76,28 +90,68 @@ public class LoginActivity extends AppCompatActivity {
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
+
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                progressBar.setVisibility(View.GONE);
-                                if (!task.isSuccessful()) {
-                                    // there was an error
-                                    if (password.length() < 6) {
-                                        inputPassword.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    }
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    String uid = user.getUid();
+//                        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+//                        dbrefUser.child(uid).child("device_token").setValue(deviceToken);
+                                    dbrefUser.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            String type = dataSnapshot.child("type").getValue().toString().trim();
+                                            if (type.equals("Owner")) {
+                                                //  showProgress(false);
+                                                startActivity(new Intent(LoginActivity.this, MainMapsActivity.class));
+                                                finish();
+                                            } else if (type.equals("User")) {
+                                                startActivity(new Intent(LoginActivity.this, UserActivity.class));
+                                                finish();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+
+                                    //showProgress(false);
+                                    Toast.makeText(LoginActivity.this, "Login Failed ! Wrong Credentials", Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         });
             }
         });
     }
+
+//                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                // If sign in fails, display a message to the user. If sign in succeeds
+//                                // the auth state listener will be notified and logic to handle the
+//                                // signed in user can be handled in the listener.
+//                                progressBar.setVisibility(View.GONE);
+//                                if (!task.isSuccessful()) {
+//                                    // there was an error
+//                                    if (password.length() < 6) {
+//                                        inputPassword.setError(getString(R.string.minimum_password));
+//                                    } else {
+//                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+//                                    }
+//                                } else {
+//                                    Intent intent = new Intent(LoginActivity.this, MainMapsActivity.class); ///Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+//                            }
+//                        });
+//            }
+//        });
+//    }
+
 
     private void resetPassword() {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
