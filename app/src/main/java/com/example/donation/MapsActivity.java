@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.donation.ModelClasses.UserInformation;
+import com.example.donation.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -57,6 +59,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     UserInformation user = s.getValue(UserInformation.class);
                     LatLng location=new LatLng(user.latitude,user.longitude);
                     mMap.addMarker(new MarkerOptions().position(location).title(user.name)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5.0f));
                 }
             }
 

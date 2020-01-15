@@ -1,8 +1,10 @@
-package com.example.donation;
+package com.example.donation.Activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.donation.R;
 
 public class reset_passwordActivity extends AppCompatActivity {
 

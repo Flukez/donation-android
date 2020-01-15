@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".Activities.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,12 +14,14 @@
 
         <TextView
             android:id="@+id/tvHead"
+            android:background="@drawable/donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="REGISTER"
-            android:textColor="#FFFFFF"
-            android:textSize="60dp" />
+            android:gravity="center" />
+
+<!--        android:text="REGISTER"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textSize="60dp"-->
 
     </LinearLayout>
 

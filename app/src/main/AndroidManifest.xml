@@ -7,9 +7,8 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -18,12 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserActivity"></activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Activities.User.UserDatilsActivity"></activity>
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".MainMapsActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".reset_passwordActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Activities.SignupActivity" />
+        <activity android:name=".Activities.reset_passwordActivity" />
+        <activity android:name=".Activities.MainActivity" />
         <activity android:name=".MapsActivity" />
 
         <meta-data
@@ -31,7 +31,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.User.UserActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
