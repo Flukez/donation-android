@@ -38,7 +38,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
        });
     }
 
-    public void setDetails(Context ctx, String name, String address, String phonenumber, String image) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
+    public void setDetails(Context ctx, String name, String adress, String phonenumber, String image) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
 
         TextView mName = mview.findViewById(R.id.rName);
         TextView madress = mview.findViewById(R.id.rAdress);//add New
@@ -47,7 +47,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImage = mview.findViewById(R.id.rImage);
 
         mName.setText(name);
-        madress.setText(address);//add New
+        madress.setText(adress);//add New
         mphonenumber.setText(phonenumber);//add New
 
 

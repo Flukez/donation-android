@@ -5,7 +5,7 @@ public class Model {
 //    String title;
 
     String name;
-    String adress;
+    String address;
     String phonenumber;
     String image;
 
@@ -18,8 +18,8 @@ public class Model {
         return this.name;
     }
 
-    public String getAdress() {
-        return this.adress;
+    public String getAddress() {
+        return this.address;
     }
 
     public String getPhonenumber() {
@@ -31,8 +31,8 @@ public class Model {
         this.name = name;
     }
 
-    public void setAdress(String address) {
-        this.adress = address;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setPhonenumber(String phonenumber) {
