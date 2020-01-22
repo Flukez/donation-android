@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donation.View.ViewHolder;
 import com.squareup.picasso.Picasso;
 
-public class ViewHoderEvent extends RecyclerView.ViewHolder {
+public class ViewHoderMap extends RecyclerView.ViewHolder {
 
     View mview;
 
-    public ViewHoderEvent(@NonNull View itemView) {
+    public ViewHoderMap(@NonNull View itemView) {
         super(itemView);
 
         mview = itemView;
@@ -38,17 +38,17 @@ public class ViewHoderEvent extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setDetails(Context ctx, String nameevent, String detail, String dt) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
+    public void setDetails(Context ctx, String name, String latitude, String longitude) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
 
-        TextView mNameevent = mview.findViewById(R.id.rName);
-        TextView mdatail = mview.findViewById(R.id.rDatail);
-        TextView mdate = mview.findViewById(R.id.rDate);
+        TextView mName = mview.findViewById(R.id.rName);
+        TextView MLatitude = mview.findViewById(R.id.rLatitude);
+        TextView mLongitude = mview.findViewById(R.id.rLongitude);
 
 //        ImageView mImage = mview.findViewById(R.id.rImage);
 
-        mNameevent.setText(nameevent);
-        mdatail.setText(detail);
-        mdate.setText(dt);
+        mName.setText(name);
+        MLatitude.setText(latitude);
+        mLongitude.setText(longitude);
 
 
 //        Picasso.get().load(image).into(mImage);
@@ -58,14 +58,13 @@ public class ViewHoderEvent extends RecyclerView.ViewHolder {
     private ClickListener mClickListener;
 
 
-
     public interface ClickListener {
 
         void onItemClick(View view,int position);
         void onItemLongClick(View view,int position);
     }
 
-    public void setOnClickListener(ViewHoderEvent.ClickListener clickListener) {
+    public void setOnClickListener(ViewHoderMap.ClickListener clickListener) {
         mClickListener = clickListener;
     }
 

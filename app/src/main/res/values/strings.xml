@@ -19,10 +19,8 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
 
-
     <string-array name="Type_Person">
         <item>Owner</item>
         <item>User</item>
     </string-array>
-
 </resources>

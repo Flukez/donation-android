@@ -34,6 +34,7 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_maps);
+
         btnproceed = (Button) findViewById(R.id.btnproceed);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("place");
         editTextName = (EditText) findViewById(R.id.editTextName);

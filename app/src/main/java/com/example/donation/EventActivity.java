@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,7 +74,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull ViewHoderEvent hoder, int i, @NonNull ModelEvent model) {
 
-                hoder.setDetails(getApplicationContext(), model.getNameevent(), model.getDetail(), model.getDt(), model.getImage());
+                hoder.setDetails(getApplicationContext(), model.getNameevent(), model.getDetail(), model.getDt()); //model.getImage()
             }
 
             @NonNull
@@ -86,6 +87,13 @@ public class EventActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Toast.makeText(EventActivity.this, " Event", Toast.LENGTH_SHORT).show();
+
+                        DataSnapshot snapshot = getSnapshots().getSnapshot(position);
+
+                        Intent intent = new Intent(view.getContext(), MapActivity.class);
+
+                        intent.putExtra("key", snapshot.getKey());
+                        startActivity(intent);
                     }
 
                     @Override
@@ -104,7 +112,7 @@ public class EventActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(firebaseRecyclerAdapter);
 
 
-//        Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
 
 //        String name = getIntent().getStringExtra("name");
 //        String adress = getIntent().getStringExtra("adress");

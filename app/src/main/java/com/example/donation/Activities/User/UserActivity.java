@@ -50,7 +50,7 @@ public class UserActivity extends AppCompatActivity {
         showData();
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Place List");
+        actionBar.setTitle("Place");
     }
 
     private void showData() {
@@ -60,7 +60,7 @@ public class UserActivity extends AppCompatActivity {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Model, ViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Model model) {
-                holder.setDetails(getApplicationContext(), model.getName(), model.getAddress(), model.getPhonenumber(), model.getImage());
+                holder.setDetails(getApplicationContext(), model.getName(), model.getAddress(), model.getPhonenumber());//model.getImage()
 
             }
 
@@ -83,21 +83,14 @@ public class UserActivity extends AppCompatActivity {
                         TextView mName = view.findViewById(R.id.rName);
                         TextView mAdress = view.findViewById(R.id.rAdress);
                         TextView mPhonenumber = view.findViewById(R.id.rPhonenumber);
-//                        ImageView mImageView = view.findViewById(R.id.rImage);
 
                         //get data from views
                         String name = mName.getText().toString();
                         String adress = mAdress.getText().toString();
                         String phonenumber = mPhonenumber.getText().toString();
-//                        Drawable drawable = mImageView.getDrawable();
-//                        Bitmap mBitmap = ((BitmapDrawable)drawable).getBitmap();
 
-                        //pass this data to new activity
                         Intent intent = new Intent(view.getContext(), EventActivity.class);
-//                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//                        byte[] bytes = stream.toByteArray();
-//                        intent.putExtra("image", bytes);
+
                         intent.putExtra("key", snapshot.getKey());
 
                         intent.putExtra("name", name);
