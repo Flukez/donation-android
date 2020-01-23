@@ -67,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot s : dataSnapshot.getChildren()){
                     UserInformation user = s.getValue(UserInformation.class);
-                    LatLng location=new LatLng(user.latitude,user.longitude);
+                    LatLng location=new LatLng(Double.parseDouble(String.valueOf(user.latitude)),Double.parseDouble(String.valueOf(user.longitude)));
                     mMap.addMarker(new MarkerOptions().position(location).title(user.name)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5.0f));
                 }

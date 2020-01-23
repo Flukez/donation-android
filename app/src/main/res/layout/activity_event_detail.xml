@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="@null"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="5.0dp"
+    tools:context=".Activities.User.UserActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detail"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tDatetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datetime"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/Image"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="300dp"-->
+        <!--            android:background="@drawable/lo"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:adjustViewBounds="true"/>-->
+
+        <Button
+            android:id="@+id/btnMap"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/button_curve"
+            android:text="เข้าร่วมกิจกรรม" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -70,6 +70,9 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
 
         double latitude = Double.parseDouble(editTextLatitude.getText().toString().trim());
         double longitude = Double.parseDouble(editTextLongitude.getText().toString().trim());
+//        String latitude = editTextLatitude.getText().toString().trim();
+//        String longitude = editTextLongitude.getText().toString().trim();
+
         UserInformation userInformation=new UserInformation(name, adress, phonenumber, latitude, longitude);
         mDatabase.child(firebaseAuth.getUid()).setValue(userInformation);
         Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();

@@ -75,7 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String phone = edPhonenumber.getText().toString();
                 String address = edAddress.getText().toString();
 
-
                 if (!email.matches("[a-zA-Z0-9._-]+[@]+[a-zA-Z]+[.]+[a-zA-Z.]+")) {
                     edEmail.setError("กรุณากรอกอีเมล");
                 } else if (firsname.matches("")) {
@@ -122,7 +121,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(edEmail.getText()) || TextUtils.isEmpty(edPassword.getText())
                 || (TextUtils.isEmpty(edFirsname.getText()) || TextUtils.isEmpty(edLastname.getText())
-                || (TextUtils.isEmpty(edAddress.getText()) || TextUtils.isEmpty(edPhonenumber.getText())))) {
+                || (TextUtils.isEmpty(edAddress.getText()) || TextUtils.isEmpty(edPhonenumber.getText())
+                || TextUtils.isEmpty(radioUser.getText())  || TextUtils.isEmpty(radioOwner.getText())))) {
             Toast.makeText(RegisterActivity.this, "Please All fileds are required", Toast.LENGTH_SHORT).show();
     } else {
             showDialog();
@@ -143,12 +143,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 String addphone = edPhonenumber.getText().toString().trim();
                                 String addaddress = edAddress.getText().toString().trim();
 
-                                if(radioUser.isChecked()) {
-                                    type="User";
-                                }
-                                if (radioOwner.isChecked()) {
-                                    type="Owner";
-                                }
+                                    if(radioUser.isChecked()) {
+                                        type="User";
+                                    }
+                                    if (radioOwner.isChecked()) {
+                                        type="Owner";
+                                    }
 
                                 String id = auth.getCurrentUser().getUid();//databaseUserRegister.push().getKey();
 

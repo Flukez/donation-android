@@ -78,24 +78,21 @@ public class UserActivity extends AppCompatActivity {
 
                         Toast.makeText(UserActivity.this, "Hello", Toast.LENGTH_SHORT).show();
 
-                        //Naw Code 14/01/63
-                        //View
-                        TextView mName = view.findViewById(R.id.rName);
-                        TextView mAdress = view.findViewById(R.id.rAdress);
-                        TextView mPhonenumber = view.findViewById(R.id.rPhonenumber);
+//                        TextView mName = view.findViewById(R.id.rName);
+//                        TextView mAdress = view.findViewById(R.id.rAdress);
+//                        TextView mPhonenumber = view.findViewById(R.id.rPhonenumber);
 
-                        //get data from views
-                        String name = mName.getText().toString();
-                        String adress = mAdress.getText().toString();
-                        String phonenumber = mPhonenumber.getText().toString();
+//                        String name = mName.getText().toString();
+//                        String adress = mAdress.getText().toString();
+//                        String phonenumber = mPhonenumber.getText().toString();
 
                         Intent intent = new Intent(view.getContext(), EventActivity.class);
 
-                        intent.putExtra("key", snapshot.getKey());
+                        intent.putExtra("keyPlace", snapshot.getKey());
 
-                        intent.putExtra("name", name);
-                        intent.putExtra("adress", adress);
-                        intent.putExtra("phonenumber", phonenumber);
+//                        intent.putExtra("name", name);
+//                        intent.putExtra("adress", adress);
+//                        intent.putExtra("phonenumber", phonenumber);
                         startActivity(intent);
 
                     }

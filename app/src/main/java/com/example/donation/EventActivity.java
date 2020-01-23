@@ -30,16 +30,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EventActivity extends AppCompatActivity {
 
-    TextView mName, mAdress, mPhonenumber;
-    ImageView mImageView;
-    Button btnMap;
-
     LinearLayoutManager mLinearLayoutManager;
     RecyclerView mRecyclerView;
 
     private FirebaseDatabase database;
     private FirebaseRecyclerOptions<ModelEvent> firebaseRecyclerOptions;
     private FirebaseRecyclerAdapter<ModelEvent, ViewHoderEvent> firebaseRecyclerAdapter;
+
+    private String keyPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +56,12 @@ public class EventActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerView);
 
-        mName = findViewById(R.id.tName);
-        mAdress = findViewById(R.id.tAdress);
-        mPhonenumber = findViewById(R.id.tPhonenumber);
-
         database = FirebaseDatabase.getInstance();
 
-        String key = getIntent().getStringExtra("key");
+        keyPlace = getIntent().getStringExtra("keyPlace");
 
-        DatabaseReference reference = database.getReference("/Event/" + key);
+
+        DatabaseReference reference = database.getReference("/Event/" + keyPlace);
 
         firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<ModelEvent>().setQuery(reference, ModelEvent.class).build();
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ModelEvent, ViewHoderEvent>(firebaseRecyclerOptions) {
@@ -88,11 +83,20 @@ public class EventActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Toast.makeText(EventActivity.this, " Event", Toast.LENGTH_SHORT).show();
 
+                        TextView mDetail = view.findViewById(R.id.rDatail);
+                        TextView mDate = view.findViewById(R.id.rDate);
+                        String detail = mDetail.getText().toString();
+                        String datetime = mDate.getText().toString();
+
                         DataSnapshot snapshot = getSnapshots().getSnapshot(position);
 
-                        Intent intent = new Intent(view.getContext(), MapActivity.class);
+                        Intent intent = new Intent(view.getContext(), EventDetailActivity.class);//MapActivity.class
 
-                        intent.putExtra("key", snapshot.getKey());
+                        intent.putExtra("keyPlace", keyPlace);
+                        intent.putExtra("keyEvent", snapshot.getKey());
+
+                        intent.putExtra("detail", detail);
+                        intent.putExtra("dt", datetime);
                         startActivity(intent);
                     }
 
@@ -111,8 +115,7 @@ public class EventActivity extends AppCompatActivity {
         firebaseRecyclerAdapter.startListening();
         mRecyclerView.setAdapter(firebaseRecyclerAdapter);
 
-
-        Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, keyPlace, Toast.LENGTH_SHORT).show();
 
 //        String name = getIntent().getStringExtra("name");
 //        String adress = getIntent().getStringExtra("adress");

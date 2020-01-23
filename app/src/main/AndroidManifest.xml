@@ -17,9 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".EventDetailActivity"></activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".MapActivity" />
         <activity android:name=".EventActivity" />
-        <activity android:name=".Activities.User.UserDatilsActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".MainMapsActivity" />

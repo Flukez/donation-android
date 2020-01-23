@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +17,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.donation.ModelClasses.UserInformation;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -31,8 +35,8 @@ public class MapActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
 
     private FirebaseDatabase database;
-    private FirebaseRecyclerOptions<ModelMap> firebaseRecyclerOptions;
-    private FirebaseRecyclerAdapter<ModelMap, ViewHoderMap> firebaseRecyclerAdapter;
+//    private FirebaseRecyclerOptions<ModelMap> firebaseRecyclerOptions;
+//    private FirebaseRecyclerAdapter<ModelMap, ViewHoderMap> firebaseRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,57 +62,114 @@ public class MapActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
 
-        String key = getIntent().getStringExtra("key");
+        String keyEvent = getIntent().getStringExtra("keyEvent");
 
-        DatabaseReference reference = database.getReference("/Place/" + key);
+        String keyPlace = getIntent().getStringExtra("keyPlace");
 
-        firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<ModelMap>().setQuery(reference, ModelMap.class).build();
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ModelMap, ViewHoderMap>(firebaseRecyclerOptions) {
 
+        DatabaseReference placeRef = database.getReference("Place").child(keyPlace); //Datail Evnet
+        placeRef.addValueEventListener(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull ViewHoderMap holder, int i, @NonNull ModelMap model) {
-                holder.setDetails(getApplicationContext(), model.getName(), model.getLatitude(), model.getLongitude());
-            }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-            @NonNull
-            @Override
-            public ViewHoderMap onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.map, parent, false);
+                Log.d("DAWDADWADWADW", dataSnapshot.toString());
+                final UserInformation information = dataSnapshot.getValue(UserInformation.class);
 
-                ViewHoderMap viewHoderMap = new ViewHoderMap(itemView);
-                viewHoderMap.setOnClickListener(new ViewHoderMap.ClickListener() {
+                mbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemClick(View view, int position) {
-                        Toast.makeText(MapActivity.this, " Map", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                    @Override
-                    public void onItemLongClick(View view, int position) {
-
-                        Toast.makeText(MapActivity.this, "Long Click", Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {
+                        String label = information.name;
+                        String uriBegin = "geo:"+ information.latitude +","+information.longitude;
+                        String query = information.latitude +","+information.longitude+"(" + label + ")";
+                        String encodedQuery = Uri.encode(query);
+                        String uriString = uriBegin + "?q=" + encodedQuery;
+                        Uri uri = Uri.parse(uriString);
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
                     }
                 });
 
-                return viewHoderMap;
             }
-        };
 
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        firebaseRecyclerAdapter.startListening();
-        mRecyclerView.setAdapter(firebaseRecyclerAdapter);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//        DatabaseReference eventDetailRef = database.getReference("Event").child(keyPlace).child(keyEvent); //main Event
+//        eventDetailRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                Toast.makeText(getBaseContext(), dataSnapshot.toString(), Toast.LENGTH_LONG).show();
+//
+//                TextView mName = findViewById(R.id.rName);
+//                TextView mLatitude = findViewById(R.id.rLatitude);
+//                TextView mLongitude = findViewById(R.id.rLongitude);
+//
+//                String name = mName.getText().toString();
+//                String latitude = mLatitude.getText().toString();
+//                String longitude = mLongitude.getText().toString();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
+//
+//        firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<ModelMap>().setQuery(reference, ModelMap.class).build();
+//        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ModelMap, ViewHoderMap>(firebaseRecyclerOptions) {
+//
+//            @Override
+//            protected void onBindViewHolder(@NonNull ViewHoderMap holder, int i, @NonNull ModelMap model) {
+//                holder.setDetails(getApplicationContext(), model.getName(), model.getLatitude(), model.getLongitude());
+//            }
+//
+//            @NonNull
+//            @Override
+//            public ViewHoderMap onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.map, parent, false);
+//
+//                ViewHoderMap viewHoderMap = new ViewHoderMap(itemView);
+//                viewHoderMap.setOnClickListener(new ViewHoderMap.ClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//                        Toast.makeText(MapActivity.this, " Map", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//
+//                    @Override
+//                    public void onItemLongClick(View view, int position) {
+//
+//                        Toast.makeText(MapActivity.this, "Long Click", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//                return viewHoderMap;
+//            }
+//        };
+//
+//        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+//        firebaseRecyclerAdapter.startListening();
+//        mRecyclerView.setAdapter(firebaseRecyclerAdapter);
 
-        Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
+//
+//
+//        Toast.makeText(this, keyPlace, Toast.LENGTH_SHORT).show();
+//
+//        Toast.makeText(this, keyEvent, Toast.LENGTH_SHORT).show();
 
     }
 
     protected void onStart() {
         super.onStart();
-
-        if (firebaseRecyclerAdapter != null) {
-            firebaseRecyclerAdapter.startListening();
-        }
+//
+//        if (firebaseRecyclerAdapter != null) {
+//            firebaseRecyclerAdapter.startListening();
+//        }
     }
 }

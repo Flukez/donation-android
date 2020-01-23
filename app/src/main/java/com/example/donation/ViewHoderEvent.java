@@ -50,7 +50,6 @@ public class ViewHoderEvent extends RecyclerView.ViewHolder {
         mdatail.setText(detail);
         mdate.setText(dt);
 
-
 //        Picasso.get().load(image).into(mImage);
 
     }
