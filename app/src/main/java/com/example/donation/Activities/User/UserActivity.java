@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.example.donation.R;
 import com.example.donation.View.ViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,21 +81,8 @@ public class UserActivity extends AppCompatActivity {
 
                         Toast.makeText(UserActivity.this, "Hello", Toast.LENGTH_SHORT).show();
 
-//                        TextView mName = view.findViewById(R.id.rName);
-//                        TextView mAdress = view.findViewById(R.id.rAdress);
-//                        TextView mPhonenumber = view.findViewById(R.id.rPhonenumber);
-
-//                        String name = mName.getText().toString();
-//                        String adress = mAdress.getText().toString();
-//                        String phonenumber = mPhonenumber.getText().toString();
-
                         Intent intent = new Intent(view.getContext(), EventActivity.class);
-
                         intent.putExtra("keyPlace", snapshot.getKey());
-
-//                        intent.putExtra("name", name);
-//                        intent.putExtra("adress", adress);
-//                        intent.putExtra("phonenumber", phonenumber);
                         startActivity(intent);
 
                     }

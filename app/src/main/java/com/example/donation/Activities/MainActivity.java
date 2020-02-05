@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 signOut();
             } }); }
+
     //sign out method
     public void signOut() {
         auth.signOut();
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         auth.addAuthStateListener(authListener);
     }
+
     @Override
     public void onStop() {
         super.onStop();

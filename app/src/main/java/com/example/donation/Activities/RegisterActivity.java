@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.donation.HomeActivity;
 import com.example.donation.ModelClasses.UserRegister;
 import com.example.donation.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -156,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 databaseUserRegister.child(id).setValue(user);
                               //  Toast.makeText(this, "adduserregister", Toast.LENGTH_LONG).show();
 
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
 

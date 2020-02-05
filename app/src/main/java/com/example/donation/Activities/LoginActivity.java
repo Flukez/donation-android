@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.donation.HomeActivity;
 import com.example.donation.MainMapsActivity;
 import com.example.donation.R;
 import com.example.donation.Activities.User.UserActivity;
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 startActivity(new Intent(LoginActivity.this, MainMapsActivity.class));
                                                 finish();
                                             } else if (type.equals("User")) {
-                                                startActivity(new Intent(LoginActivity.this, UserActivity.class));
+                                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                                 finish();
                                             }
                                         }
