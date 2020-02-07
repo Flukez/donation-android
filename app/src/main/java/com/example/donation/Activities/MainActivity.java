@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         signOut = (Button) findViewById(R.id.sign_out);
         email = (TextView) findViewById(R.id.email);
-        email.setText(user.getEmail());
+//        email.setText(user.getEmail()); //05/02/63
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

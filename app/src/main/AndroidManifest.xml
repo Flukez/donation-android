@@ -22,7 +22,7 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".EventActivity" />
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".MainMapsActivity" />
         <activity android:name=".Activities.SignupActivity" />
@@ -35,7 +35,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
