@@ -6,23 +6,31 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.HomeActivity;
+import com.example.donation.MainMapActivity;
+import com.example.donation.MainMapsActivity;
 import com.example.donation.ModelClasses.UserRegister;
 import com.example.donation.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,14 +40,17 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edPassword;
     private EditText edAddress;
     private EditText edPhonenumber;
-    private RadioButton radioUser, radioOwner;
+//    private RadioButton radioUser, radioOwner;
     private Button btregister;
     private static final String TAG = "RegisterActivity";
     ProgressDialog progressDialog;
     FirebaseAuth auth;
     DatabaseReference databaseUserRegister;
 
-    String type = "";
+    String categoryItemText;
+    private Spinner categoryTv;
+
+//    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +73,10 @@ public class RegisterActivity extends AppCompatActivity {
         edPhonenumber = (EditText) findViewById(R.id.phonenumber);
         btregister = (Button) findViewById(R.id.btregister);
 
-        radioUser = (RadioButton) findViewById(R.id.radio_User);
-        radioOwner = (RadioButton) findViewById(R.id.radio_Owner);
+        categoryTv = (Spinner) findViewById(R.id.usergrope);
+
+//        radioUser = (RadioButton) findViewById(R.id.radio_User);
+//        radioOwner = (RadioButton) findViewById(R.id.radio_Owner);
 
         btregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +110,25 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+        final String[] usergrope = getResources().getStringArray(R.array.userGrope);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_reg, usergrope);
+        categoryTv.setAdapter(adapter);
+
+        //setOnItemSelectedListener
+        categoryTv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                categoryItemText = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void showDialog() {
@@ -112,20 +144,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void userRegister() {
 
-        ///Tost !! เตื่อนที่ละบรรทัด
-//        if (TextUtils.isEmpty(edEmail.getText())) {
-//            Toast.makeText(RegisterActivity.this, "Please Enter Email!", Toast.LENGTH_SHORT).show();
-//
-//        }else if (TextUtils.isEmpty(edPassword.getText())) {
-//            Toast.makeText(RegisterActivity.this, "Please Enter Password!", Toast.LENGTH_SHORT).show();
-//        }
-
         if (TextUtils.isEmpty(edEmail.getText()) || TextUtils.isEmpty(edPassword.getText())
                 || (TextUtils.isEmpty(edFirsname.getText()) || TextUtils.isEmpty(edLastname.getText())
-                || (TextUtils.isEmpty(edAddress.getText()) || TextUtils.isEmpty(edPhonenumber.getText())
-                || TextUtils.isEmpty(radioUser.getText())  || TextUtils.isEmpty(radioOwner.getText())))) {
+                || (TextUtils.isEmpty(edAddress.getText()) || TextUtils.isEmpty(edPhonenumber.getText())))) {
             Toast.makeText(RegisterActivity.this, "Please All fileds are required", Toast.LENGTH_SHORT).show();
-    } else {
+        } else {
             showDialog();
 
             auth.createUserWithEmailAndPassword(edEmail.getText().toString(), edPassword.getText().toString())
@@ -136,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 hideDialog();
 
-                                String type = "";
+//                                String type = "";
                                 String addemail = edEmail.getText().toString().trim();
                                 String addpassword = edPassword.getText().toString().trim();
                                 String addfirsname = edFirsname.getText().toString().trim();
@@ -144,24 +167,42 @@ public class RegisterActivity extends AppCompatActivity {
                                 String addphone = edPhonenumber.getText().toString().trim();
                                 String addaddress = edAddress.getText().toString().trim();
 
-                                    if(radioUser.isChecked()) {
-                                        type="User";
-                                    }
-                                    if (radioOwner.isChecked()) {
-                                        type="Owner";
-                                    }
+//                                if (radioUser.isChecked()) {
+//                                    type = "User";
+//                                }
+//                                if (radioOwner.isChecked()) {
+//                                    type = "Owner";
+//                                }
+
+                                String type = categoryItemText;
 
                                 String id = auth.getCurrentUser().getUid();//databaseUserRegister.push().getKey();
-
-                                UserRegister user = new UserRegister(id, addemail, addpassword, addfirsname, addlastname, addphone, addaddress,type);
+                                UserRegister user = new UserRegister(id, addemail, addpassword, addfirsname, addlastname, addphone, addaddress, type);
                                 databaseUserRegister.child(id).setValue(user);
-                              //  Toast.makeText(this, "adduserregister", Toast.LENGTH_LONG).show();
 
-                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
+                                databaseUserRegister.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String type = dataSnapshot.child("type").getValue().toString().trim();
+                                        if (type.equals("Owner")) {
+                                            startActivity(new Intent(RegisterActivity.this, MainMapsActivity.class));
+                                            finish();
+                                        } else if (type.equals("User")) {
+                                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                                            finish();
+                                        }
+                                    }
 
-                                finish();
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+//                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                startActivity(intent);
+//                                finish();
                             } else {
                                 hideDialog();
                                 Toast.makeText(RegisterActivity.this, "Register failed!", Toast.LENGTH_SHORT).show();

@@ -1,22 +1,41 @@
 package com.example.donation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.donation.Activities.LoginActivity;
+import com.example.donation.ModelClasses.UserInformation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TestActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
     Double latitude = 0.0;
     Double longitude = 0.0;
+
+    private Button btnsave;
+
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +45,22 @@ public class TestActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+//
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("place");
+//        firebaseAuth = FirebaseAuth.getInstance();
+
+        btnsave = findViewById(R.id.bt_save);
+        btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TestActivity.this, latitude + " : " + longitude, Toast.LENGTH_SHORT).show();
+
+//                ModelMap modelmap = new ModelMap(latitude, longitude);
+//                mDatabase.child(firebaseAuth.getUid()).setValue(modelmap);
+//                Toast.makeText(TestActivity.this, "Saved", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     @Override
@@ -53,7 +88,7 @@ public class TestActivity extends FragmentActivity implements OnMapReadyCallback
                 latitude = latLng.latitude;
                 longitude = latLng.longitude;
 
-                Toast.makeText(TestActivity.this, latitude + " : " + longitude, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TestActivity.this, latitude + " : " + longitude, Toast.LENGTH_SHORT).show();
                 // Clears the previously touched position
                 googleMap.clear();
 
@@ -65,6 +100,41 @@ public class TestActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+    private FirebaseAuth firebaseAuth;
+    //Log out toolbar
+    private void checkUserStatus() {
+        //get current user
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
 
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        checkUserStatus();
+        super.onStart();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            firebaseAuth.signOut();
+            checkUserStatus();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

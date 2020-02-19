@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         if (user != null) {
 
         } else {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
     }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.donation.ModelClasses.UserInformation;
 import com.google.firebase.database.DataSnapshot;
@@ -51,13 +52,13 @@ public class EventDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                final ModelMap information = dataSnapshot.getValue(ModelMap.class);
+                final UserInformation modelMap = dataSnapshot.getValue(UserInformation.class);
                 mbtnMap.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String label = information.name;
-                        String uriBegin = "geo:" + information.latitude + "," + information.longitude;
-                        String query = information.latitude + "," + information.longitude + "(" + label + ")";
+                        String label = modelMap.name;
+                        String uriBegin = "geo:" + modelMap.latitude + "," + modelMap.longitude;
+                        String query = modelMap.latitude + "," + modelMap.longitude + "(" + label + ")";
                         String encodedQuery = Uri.encode(query);
                         String uriString = uriBegin + "?q=" + encodedQuery;
                         Uri uri = Uri.parse(uriString);
@@ -73,6 +74,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        Toast.makeText(this, keyPlace, Toast.LENGTH_SHORT).show();
+
 
     }
 }

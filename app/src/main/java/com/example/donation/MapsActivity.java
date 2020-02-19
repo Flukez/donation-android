@@ -1,12 +1,17 @@
 package com.example.donation;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.donation.Activities.LoginActivity;
 import com.example.donation.ModelClasses.UserInformation;
 import com.example.donation.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,6 +22,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,7 +66,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
         mUsers.addListenerForSingleValueEvent(new ValueEventListener() {

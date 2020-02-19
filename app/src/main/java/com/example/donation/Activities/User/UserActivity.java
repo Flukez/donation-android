@@ -79,7 +79,7 @@ public class UserActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         DataSnapshot snapshot = getSnapshots().getSnapshot(position);
 
-                        Toast.makeText(UserActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(UserActivity.this, "Hello", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(view.getContext(), EventActivity.class);
                         intent.putExtra("keyPlace", snapshot.getKey());

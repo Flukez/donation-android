@@ -15,9 +15,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.HomeActivity;
+import com.example.donation.MainMapActivity;
 import com.example.donation.MainMapsActivity;
 import com.example.donation.R;
 import com.example.donation.Activities.User.UserActivity;
+import com.example.donation.TestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnSignup, btnLogin, btnReset;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +49,30 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance(); //****////
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            finish();
+            FirebaseUser user = auth.getCurrentUser();
+            String uid = user.getUid();
+            dbrefUser.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String type = dataSnapshot.child("type").getValue().toString().trim();
+                    if (type.equals("Owner")) {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else if (type.equals("User")) {
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+//            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//            finish();
         }
+
         setContentView(R.layout.activity_login);
         setContentView(R.layout.activity_login);
         inputEmail = findViewById(R.id.email);
@@ -106,8 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             String type = dataSnapshot.child("type").getValue().toString().trim();
                                             if (type.equals("Owner")) {
-                                                //  showProgress(false);
-                                                startActivity(new Intent(LoginActivity.this, MainMapsActivity.class));
+                                                startActivity(new Intent(LoginActivity.this, MainMapActivity.class));
                                                 finish();
                                             } else if (type.equals("User")) {
                                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));

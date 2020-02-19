@@ -7,11 +7,11 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,14 +20,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.User.UserActivity"></activity>
+        <activity android:name=".MainMapsActivity"></activity>
+        <activity android:name=".Activities.User.UserActivity" />
         <activity android:name=".EventDetailActivity" />
-        <activity android:name=".TestActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".EventActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".MainMapsActivity" />
+        <activity android:name=".MainMapActivity"/>
+        <activity android:name=".TestActivity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity android:name=".Activities.reset_passwordActivity" />
         <activity android:name=".Activities.MainActivity" />

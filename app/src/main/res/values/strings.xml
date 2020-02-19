@@ -19,8 +19,18 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
 
-    <string-array name="Type_Person">
-        <item>Owner</item>
+    <string name="map_key" translatable="false">AIzaSyAEPlKilR13frsihRGht4OqczKOKXzm_U0</string>
+
+    <string-array name="categorys">
+        <item>วัดหรือศาสนาสถาน</item>
+        <item>สถานสงเคราะห์</item>
+        <item>สถานสงเคราะห์</item>
+        <item>มูลนิธิต่าง ๆ</item>
+        <item>ครอบครัวผู้ด้อยโอกาสและผู้ประสบอุทกภัย</item>
+    </string-array>
+
+    <string-array name="userGrope">
         <item>User</item>
+        <item>Owner</item>
     </string-array>
 </resources>

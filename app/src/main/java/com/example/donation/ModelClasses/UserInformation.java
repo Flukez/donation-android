@@ -3,19 +3,21 @@ package com.example.donation.ModelClasses;
 public class UserInformation {
 
     public String name;
-    public String adress;
+    public String address;
     public String phonenumber;
-    public double latitude;
-    public double longitude;
+    public String latitude;
+    public String longitude;
+    public String category;
 
     public UserInformation(){
 
     }
-    public UserInformation(String name,String adress, String phonenumber, double latitude, double longitude) {
+    public UserInformation(String name,String address, String phonenumber, String latitude, String longitude, String category) {
         this.name=name;
-        this.adress=adress;
+        this.address=address;
         this.phonenumber=phonenumber;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.category=category;
     }
 }
