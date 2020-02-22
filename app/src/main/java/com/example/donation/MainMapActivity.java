@@ -1,10 +1,8 @@
 package com.example.donation;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.donation.Activities.LoginActivity;
 import com.example.donation.ModelClasses.Event;
 import com.google.android.gms.common.api.Status;
@@ -26,7 +27,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -39,26 +39,21 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 
-public class MainMapActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class MainMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     double latitudeMain = 0.0;
     double longitudeMain = 0.0;
-
+    String categoryItemText1;
+    PlacesClient placesClient;
+    String TAG;
+    private GoogleMap mMap;
     private EditText editTextName;
     private EditText editTextAdress;
     private EditText editTextPhonenumber;
     private Button btnsave;
-
-    String categoryItemText1;
     private Spinner categoryIv;
-
     private DatabaseReference mDatabase;
     private FirebaseAuth firebaseAuth;
-
-    PlacesClient placesClient;
-
-    String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,20 +80,35 @@ public class MainMapActivity extends AppCompatActivity implements OnMapReadyCall
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainMapActivity.this, latitudeMain + " : " + longitudeMain, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainMapActivity.this, latitudeMain + " : " + longitudeMain, Toast.LENGTH_SHORT).show();
 
-                String name = editTextName.getText().toString().trim();
-                String address = editTextAdress.getText().toString().trim();
-                String phonenumber = editTextPhonenumber.getText().toString().trim();
+                String name = editTextName.getText().toString();
+                String address = editTextAdress.getText().toString();
+                String phone = editTextPhonenumber.getText().toString();
 
-                String category = categoryItemText1;
 
-                String latitude = String.valueOf(latitudeMain);
-                String longitude = String.valueOf(longitudeMain);
+                if (name.matches("")) {
+                    editTextName.setError("กรุณากรอกชื่อสถานที่");
+                } else if (address.matches("")) {
+                    editTextAdress.setError("กรุณากรอกที่อยู่");
+                } else if (phone.length() < 9 || phone.length() > 10) {
+                    editTextPhonenumber.setError("กรุณากรอกเบอร์โทรศัพท์");
+                } else {
+                    mapRegister();
+                }
 
-                Event modelmap = new Event(name, address, phonenumber, latitude, longitude, category);
-                mDatabase.child(firebaseAuth.getUid()).setValue(modelmap);
-                Toast.makeText(MainMapActivity.this, "Saved", Toast.LENGTH_LONG).show();
+//                String name = editTextName.getText().toString().trim();
+//                String address = editTextAdress.getText().toString().trim();
+//                String phonenumber = editTextPhonenumber.getText().toString().trim();
+//
+//                String category = categoryItemText1;
+//
+//                String latitude = String.valueOf(latitudeMain);
+//                String longitude = String.valueOf(longitudeMain);
+//
+//                Event modelmap = new Event(name, address, phonenumber, latitude, longitude, category);
+//                mDatabase.child(firebaseAuth.getUid()).setValue(modelmap);
+//                Toast.makeText(MainMapActivity.this, "Saved", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -167,6 +177,8 @@ public class MainMapActivity extends AppCompatActivity implements OnMapReadyCall
 
                 // Placing a marker on the touched position
                 mMap.addMarker(markerOptions);
+
+                Toast.makeText(MainMapActivity.this, latLng.latitude + " : " + latLng.longitude, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -176,7 +188,6 @@ public class MainMapActivity extends AppCompatActivity implements OnMapReadyCall
         });
 
     }
-
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -215,6 +226,28 @@ public class MainMapActivity extends AppCompatActivity implements OnMapReadyCall
 //                googleMap.addMarker(markerOptions);
 //            }
 //        });
+    }
+
+    private void mapRegister() {
+
+        if (TextUtils.isEmpty(editTextName.getText()) || TextUtils.isEmpty(editTextAdress.getText())
+                || (TextUtils.isEmpty(editTextPhonenumber.getText()))) {
+            Toast.makeText(MainMapActivity.this, "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show();
+        } else {
+
+            String name = editTextName.getText().toString().trim();
+            String address = editTextAdress.getText().toString().trim();
+            String phonenumber = editTextPhonenumber.getText().toString().trim();
+
+            String category = categoryItemText1;
+
+            String latitude = String.valueOf(latitudeMain);
+            String longitude = String.valueOf(longitudeMain);
+
+            Event modelmap = new Event(name, address, phonenumber, latitude, longitude, category);
+            mDatabase.child(firebaseAuth.getUid()).setValue(modelmap);
+            Toast.makeText(MainMapActivity.this, "Save", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
