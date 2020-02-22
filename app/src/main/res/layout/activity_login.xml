@@ -12,16 +12,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="Login"
-            android:textStyle="bold"
-            android:textSize="25sp" />
+            android:src="@drawable/logo_donation" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -29,23 +27,28 @@
 
             <EditText
                 android:id="@+id/email"
-                android:singleLine="true"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="20dp"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:textSize="16sp"
-
-                android:background="@drawable/curve_login"
-
+                android:layout_marginRight="25dp"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/hint_email"
+                android:background="@drawable/curve_login"
+                android:drawableStart="@drawable/icon_account"
+                android:drawableLeft="@drawable/icon_account"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/kanit_light"
+                android:gravity="center_vertical"
+
+                android:hint="@string/email"
+
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
                 android:textColor="@color/input_login"
-                android:textColorHint="@color/input_login_hint" />
+                android:textColorHint="@color/input_login_hint"
+                android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,22 +58,28 @@
 
             <EditText
                 android:id="@+id/password"
-                android:singleLine="true"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:padding="12dp"
-                android:textSize="16sp"
-
-                android:background="@drawable/curve_login"
-
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/curve_login"
+                android:drawableStart="@drawable/icon_lock2"
+                android:drawableLeft="@drawable/icon_lock2"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/kanit_light"
+                android:gravity="center_vertical"
+
                 android:hint="@string/hint_password"
+
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:padding="10dp"
+                android:singleLine="true"
                 android:textColor="@color/input_login"
-                android:textColorHint="@color/input_login_hint" />
+                android:textColorHint="@color/input_login_hint"
+                android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,14 +87,17 @@
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:padding="3dp"
-            android:textSize="17sp"
-            android:textStyle="bold"
-
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="25dp"
             android:background="@color/btn_login_register"
+            android:fontFamily="@font/kanit"
+            android:padding="3dp"
             android:text="@string/btn_login"
-            android:textColor="@color/white" />
+
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_reset_password"
@@ -93,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@null"
+            android:fontFamily="@font/kanit"
             android:text="@string/btn_forgot_password"
             android:textColor="@color/btn_login_register" />
 

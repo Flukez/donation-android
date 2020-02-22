@@ -1,8 +1,11 @@
 package com.example.donation.View;
 
 import android.content.Context;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +39,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
                return true; //false //New Code 14/01/63
        }
        });
+
     }
 
     public void setDetails(Context ctx, String name, String adress, String phonenumber) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
@@ -67,4 +71,5 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
         mClickListener = clickListener;
     }
+
 }

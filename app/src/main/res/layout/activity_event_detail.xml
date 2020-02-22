@@ -1,57 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#fff"
-    app:cardCornerRadius="@null"
-    app:cardUseCompatPadding="true"
+    android:orientation="vertical"
+
     app:contentPadding="5.0dp"
-    tools:context=".Activities.User.UserActivity">
+    tools:context=".Activities.User.PlaceActivity">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shape"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
+    <TextView
+        android:id="@+id/tDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detail"
+        android:textColor="#000"
+        android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/tDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Detail"
-            android:textColor="#000"
-            android:textSize="20dp" />
+    <TextView
+        android:id="@+id/tDatetime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Datetime"
+        android:textColor="#000"
+        android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/tDatetime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Datetime"
-            android:textColor="#000"
-            android:textSize="20dp" />
+    <Button
+        android:id="@+id/btnMap"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="10dip"
+        android:text="เข้าร่วมกิจกรรม" />
 
+    <Button
+        android:id="@+id/btnCall"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="10dip"
+        android:text="ติดต่อสถานที่" />
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/Image"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="300dp"-->
-        <!--            android:background="@drawable/lo"-->
-        <!--            android:scaleType="centerCrop"-->
-        <!--            android:adjustViewBounds="true"/>-->
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
-              <Button
-            android:id="@+id/btnMap"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_marginTop="10dip"
-            android:background="@drawable/button_curve"
-            android:text="เข้าร่วมกิจกรรม" />
-
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</LinearLayout>

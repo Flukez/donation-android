@@ -1,10 +1,12 @@
 package com.example.donation.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,10 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.HomeActivity;
 import com.example.donation.MainMapActivity;
-import com.example.donation.MainMapsActivity;
 import com.example.donation.R;
-import com.example.donation.Activities.User.UserActivity;
-import com.example.donation.TestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,12 +40,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_login);
 
         final DatabaseReference dbrefUser = FirebaseDatabase.getInstance().getReference("users");
 
         //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance(); //****////
+        auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
             FirebaseUser user = auth.getCurrentUser();
@@ -56,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String type = dataSnapshot.child("type").getValue().toString().trim();
                     if (type.equals("Owner")) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainMapActivity.class));
                         finish();
                     } else if (type.equals("User")) {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -73,8 +72,6 @@ public class LoginActivity extends AppCompatActivity {
 //            finish();
         }
 
-        setContentView(R.layout.activity_login);
-        setContentView(R.layout.activity_login);
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
         progressBar = findViewById(R.id.progressBar);
@@ -94,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resetPassword();
-//                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_LONG).show();
                     return;
                 }
+                closeKeyboard();
+
                 progressBar.setVisibility(View.VISIBLE);
                 //authenticate user
                 auth.signInWithEmailAndPassword(email, password)
@@ -121,8 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = auth.getCurrentUser();
                                     String uid = user.getUid();
-//                        String deviceToken = FirebaseInstanceId.getInstance().getToken();
-//                        dbrefUser.child(uid).child("device_token").setValue(deviceToken);
+
                                     dbrefUser.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -151,31 +148,17 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
             }
+
         });
     }
 
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                // If sign in fails, display a message to the user. If sign in succeeds
-//                                // the auth state listener will be notified and logic to handle the
-//                                // signed in user can be handled in the listener.
-//                                progressBar.setVisibility(View.GONE);
-//                                if (!task.isSuccessful()) {
-//                                    // there was an error
-//                                    if (password.length() < 6) {
-//                                        inputPassword.setError(getString(R.string.minimum_password));
-//                                    } else {
-//                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-//                                    }
-//                                } else {
-//                                    Intent intent = new Intent(LoginActivity.this, MainMapsActivity.class); ///Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }
-//                        });
-//            }
-//        });
-//    }
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
 
     private void resetPassword() {

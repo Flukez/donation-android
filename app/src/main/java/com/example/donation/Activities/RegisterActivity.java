@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.HomeActivity;
 import com.example.donation.MainMapActivity;
-import com.example.donation.MainMapsActivity;
 import com.example.donation.ModelClasses.UserRegister;
 import com.example.donation.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,29 +32,28 @@ import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String TAG = "RegisterActivity";
+    ProgressDialog progressDialog;
+    FirebaseAuth auth;
+    DatabaseReference databaseUserRegister;
+    String typeUserItemText;
     private EditText edEmail;
     private EditText edFirsname;
     private EditText edLastname;
     private EditText edPassword;
     private EditText edAddress;
     private EditText edPhonenumber;
-//    private RadioButton radioUser, radioOwner;
+    //    private RadioButton radioUser, radioOwner;
     private Button btregister;
-    private static final String TAG = "RegisterActivity";
-    ProgressDialog progressDialog;
-    FirebaseAuth auth;
-    DatabaseReference databaseUserRegister;
-
-    String categoryItemText;
-    private Spinner categoryTv;
+    private Spinner typeUserTv;
 
 //    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_register);
+
         databaseUserRegister = FirebaseDatabase.getInstance().getReference("users");
         setTitle("Register");
 
@@ -73,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         edPhonenumber = (EditText) findViewById(R.id.phonenumber);
         btregister = (Button) findViewById(R.id.btregister);
 
-        categoryTv = (Spinner) findViewById(R.id.usergrope);
+        typeUserTv = (Spinner) findViewById(R.id.usergrope);
 
 //        radioUser = (RadioButton) findViewById(R.id.radio_User);
 //        radioOwner = (RadioButton) findViewById(R.id.radio_Owner);
@@ -104,24 +101,25 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (phone.length() < 9 || phone.length() > 10) {
                     edPhonenumber.setError("กรุณากรอกเบอร์โทรศัพท์");
                 } else {
-                    // checkUserForm();
+//                     checkUserForm();
+                    userRegister();
                 }
-                userRegister();
+
 
             }
+
         });
 
         final String[] usergrope = getResources().getStringArray(R.array.userGrope);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_reg, usergrope);
-        categoryTv.setAdapter(adapter);
+        typeUserTv.setAdapter(adapter);
 
         //setOnItemSelectedListener
-        categoryTv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        typeUserTv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                categoryItemText = parent.getItemAtPosition(position).toString();
-
+                typeUserItemText = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -174,7 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                                    type = "Owner";
 //                                }
 
-                                String type = categoryItemText;
+                                String type = typeUserItemText;
 
                                 String id = auth.getCurrentUser().getUid();//databaseUserRegister.push().getKey();
                                 UserRegister user = new UserRegister(id, addemail, addpassword, addfirsname, addlastname, addphone, addaddress, type);
@@ -185,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String type = dataSnapshot.child("type").getValue().toString().trim();
                                         if (type.equals("Owner")) {
-                                            startActivity(new Intent(RegisterActivity.this, MainMapsActivity.class));
+                                            startActivity(new Intent(RegisterActivity.this, MainMapActivity.class));
                                             finish();
                                         } else if (type.equals("User")) {
                                             startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
@@ -198,14 +196,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     }
                                 });
-
-//                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                startActivity(intent);
-//                                finish();
                             } else {
                                 hideDialog();
-                                Toast.makeText(RegisterActivity.this, "Register failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "อีเมลนี้มีผู้ใช้งานแล้ว!", Toast.LENGTH_SHORT).show();//toast text old : Register failed!
                             }
 
                         }

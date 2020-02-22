@@ -10,16 +10,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.donation.ModelClasses.UserInformation;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.example.donation.ModelClasses.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,14 +68,14 @@ public class MapActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Log.d("DAWDADWADWADW", dataSnapshot.toString());
-                final UserInformation information = dataSnapshot.getValue(UserInformation.class);
+                final Event information = dataSnapshot.getValue(Event.class);
 
                 mbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String label = information.name;
-                        String uriBegin = "geo:"+ information.latitude +","+information.longitude;
-                        String query = information.latitude +","+information.longitude+"(" + label + ")";
+                        String uriBegin = "geo:" + information.latitude + "," + information.longitude;
+                        String query = information.latitude + "," + information.longitude + "(" + label + ")";
                         String encodedQuery = Uri.encode(query);
                         String uriString = uriBegin + "?q=" + encodedQuery;
                         Uri uri = Uri.parse(uriString);

@@ -15,7 +15,7 @@
     <string name="btn_link_to_login">already registered. login me!</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_reset_password">Reset Password</string>
-    <string name="btn_back"><![CDATA[<< Back]]></string>
+    <string name="btn_back"><![CDATA[<< ย้อนกลับ]]></string>
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
 

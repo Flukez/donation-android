@@ -2,7 +2,6 @@ package com.example.donation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,17 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.Activities.LoginActivity;
-import com.example.donation.Activities.MainActivity;
-import com.example.donation.ModelClasses.UserInformation;
+import com.example.donation.ModelClasses.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 
-
-public class MainMapsActivity extends AppCompatActivity implements View.OnClickListener {
+public class MapDemoActivity extends AppCompatActivity implements View.OnClickListener {
     private DatabaseReference mDatabase;
     private Button btnsave;
     private Button btnproceed;
@@ -46,7 +42,7 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_maps);
+        setContentView(R.layout.activity_map_demo);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Place");
 
@@ -66,7 +62,7 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
         btnproceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainMapsActivity.this, MapsActivity.class);
+                Intent i = new Intent(MapDemoActivity.this, MapsActivity.class);
                 startActivity(i);
             }
         });
@@ -75,7 +71,7 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
             // go to login
-            startActivity(new Intent(MainMapsActivity.this, LoginActivity.class));
+            startActivity(new Intent(MapDemoActivity.this, LoginActivity.class));
         }
 
         //13-02-63
@@ -87,7 +83,7 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainMapsActivity.this, "Select: " + category[position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapDemoActivity.this, "Select: " + category[position], Toast.LENGTH_SHORT).show();
 
                 categoryItemText = parent.getItemAtPosition(position).toString();
 
@@ -113,7 +109,7 @@ public class MainMapsActivity extends AppCompatActivity implements View.OnClickL
         String latitude = editTextLatitude.getText().toString().trim();
         String longitude = editTextLongitude.getText().toString().trim();
 
-        UserInformation userInformation = new UserInformation(name, address, phonenumber, latitude, longitude, category);
+        Event userInformation = new Event(name, address, phonenumber, latitude, longitude, category);
         mDatabase.child(firebaseAuth.getUid()).setValue(userInformation);
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
     }
