@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.Activities.LoginActivity;
-import com.example.donation.ModelClasses.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -109,9 +108,9 @@ public class MapDemoActivity extends AppCompatActivity implements View.OnClickLi
         String latitude = editTextLatitude.getText().toString().trim();
         String longitude = editTextLongitude.getText().toString().trim();
 
-        Event userInformation = new Event(name, address, phonenumber, latitude, longitude, category);
-        mDatabase.child(firebaseAuth.getUid()).setValue(userInformation);
-        Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
+//        ModelEventDetail userInformation = new ModelEventDetail(name, address, phonenumber, latitude, longitude, category);
+//        mDatabase.child(firebaseAuth.getUid()).setValue(userInformation);
+//        Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -152,7 +151,7 @@ public class MapDemoActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_logout, menu);
         return true;
     }
 

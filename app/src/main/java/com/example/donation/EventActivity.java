@@ -1,6 +1,7 @@
 package com.example.donation;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -34,6 +38,9 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle("Event");
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setReverseLayout(true);
@@ -66,7 +73,7 @@ public class EventActivity extends AppCompatActivity {
                 viewHoderEvent.setOnClickListener(new ViewHoderEvent.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(EventActivity.this, " Event", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(EventActivity.this, " Event", Toast.LENGTH_SHORT).show();
 
                         TextView mDetail = view.findViewById(R.id.rDatail);
                         TextView mDate = view.findViewById(R.id.rDate);
@@ -80,8 +87,8 @@ public class EventActivity extends AppCompatActivity {
                         intent.putExtra("keyPlace", keyPlace);
                         intent.putExtra("keyEvent", snapshot.getKey());
 
-                        intent.putExtra("detail", detail);
-                        intent.putExtra("dt", "เวลา: "+datetime);
+                        intent.putExtra("detail", detail);//"\n"
+                        intent.putExtra("dt", datetime);
                         startActivity(intent);
                     }
 
@@ -102,14 +109,6 @@ public class EventActivity extends AppCompatActivity {
 
         Toast.makeText(this, keyPlace, Toast.LENGTH_SHORT).show();
 
-//        String name = getIntent().getStringExtra("name");
-//        String adress = getIntent().getStringExtra("adress");
-//        String phonenumber = getIntent().getStringExtra("phonenumber");
-//
-//        mName.setText(name);
-//        mAdress.setText(adress);
-//        mPhonenumber.setText(phonenumber);
-
     }
 
     protected void onStart() {
@@ -124,6 +123,28 @@ public class EventActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_comment, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_comment:
+                Intent intent = new Intent(this, CommentActivity.class);
+                intent.putExtra("keyPlace", keyPlace);
+                this.startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
         return true;
     }
 }

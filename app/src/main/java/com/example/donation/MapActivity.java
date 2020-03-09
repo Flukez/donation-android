@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.donation.ModelClasses.Event;
+import com.example.donation.ModelClasses.ModelEventDetail;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +68,7 @@ public class MapActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Log.d("DAWDADWADWADW", dataSnapshot.toString());
-                final Event information = dataSnapshot.getValue(Event.class);
+                final ModelEventDetail information = dataSnapshot.getValue(ModelEventDetail.class);
 
                 mbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -92,7 +92,7 @@ public class MapActivity extends AppCompatActivity {
             }
         });
 
-//        DatabaseReference eventDetailRef = database.getReference("Event").child(keyPlace).child(keyEvent); //main Event
+//        DatabaseReference eventDetailRef = database.getReference("ModelEventDetail").child(keyPlace).child(keyEvent); //main ModelEventDetail
 //        eventDetailRef.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

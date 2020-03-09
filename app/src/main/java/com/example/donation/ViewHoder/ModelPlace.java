@@ -1,4 +1,4 @@
-package com.example.donation.View;
+package com.example.donation.ViewHoder;
 
 public class ModelPlace {
 
@@ -6,11 +6,12 @@ public class ModelPlace {
     String address;
     String phonenumber;
     String image;
+    Boolean status;
+    Double averageRating;
+    Integer countRating;
 
     public ModelPlace() {
-
     }
-
 
     public String getName() {
         return this.name;
@@ -36,7 +37,6 @@ public class ModelPlace {
         this.phonenumber = phonenumber;
     }
 
-
     public String getImage() {
         return this.image;
     }
@@ -45,4 +45,27 @@ public class ModelPlace {
         this.image = image;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Integer getCountRating() {
+        return countRating;
+    }
+
+    public void setCountRating(Integer countRating) {
+        this.countRating = countRating;
+    }
 }

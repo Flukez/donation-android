@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.HomeActivity;
-import com.example.donation.MainMapActivity;
+import com.example.donation.MainMapsActivity;
 import com.example.donation.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String type = dataSnapshot.child("type").getValue().toString().trim();
                     if (type.equals("Owner")) {
-                        startActivity(new Intent(LoginActivity.this, MainMapActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainMapsActivity.class));
                         finish();
                     } else if (type.equals("User")) {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             String type = dataSnapshot.child("type").getValue().toString().trim();
                                             if (type.equals("Owner")) {
-                                                startActivity(new Intent(LoginActivity.this, MainMapActivity.class));
+                                                startActivity(new Intent(LoginActivity.this, MainMapsActivity.class));
                                                 finish();
                                             } else if (type.equals("User")) {
                                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));

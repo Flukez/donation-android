@@ -10,21 +10,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7">
+        android:layout_weight="0.4"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvHead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="สมัครสมาชิก"
-            android:layout_gravity="center_vertical"
             android:fontFamily="@font/kanit"
             android:textSize="30sp"
             android:gravity="center|bottom" />
 
-        <!--        android:text="REGISTER"-->
-        <!--        android:textColor="#FFFFFF"-->
-        <!--        android:textSize="60dp"-->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.2dp"
+            android:layout_alignParentTop="true"
+
+            android:layout_marginLeft="175dp"
+            android:layout_marginRight="150dp"
+            android:background="#000" />
 
     </LinearLayout>
 
@@ -55,6 +61,8 @@
                     android:background="@drawable/bg_register"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 @ ."
                     android:fontFamily="@font/kanit_light"
+                    android:drawableStart="@drawable/ic_email"
+                    android:drawablePadding="5dp"
                     android:hint="อีเมล"
                     android:imeOptions="actionNext"
                     android:inputType="text"
@@ -71,6 +79,8 @@
                     android:background="@drawable/bg_register"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
                     android:fontFamily="@font/kanit_light"
+                    android:drawableStart="@drawable/ic_lock_back"
+                    android:drawablePadding="5dp"
                     android:hint="รหัสผ่าน"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
@@ -86,6 +96,8 @@
                     android:layout_marginRight="30dp"
                     android:background="@drawable/bg_register"
                     android:fontFamily="@font/kanit_light"
+                    android:drawableStart="@drawable/icon_name"
+                    android:drawablePadding="5dp"
                     android:hint="ชื่อ"
                     android:imeOptions="actionNext"
                     android:inputType="text"
@@ -101,9 +113,54 @@
                     android:layout_marginRight="30dp"
                     android:background="@drawable/bg_register"
                     android:fontFamily="@font/kanit_light"
+                    android:drawableStart="@drawable/icon_name"
+                    android:drawablePadding="5dp"
                     android:hint="นามสกุล"
                     android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="9dp" />
+
+                <com.santalu.maskedittext.MaskEditText
+                    android:id="@+id/IdCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/bg_register"
+
+                    android:inputType="number"
+                    app:met_mask="#-####-#####-##-#"
+                    android:digits="0123456789"
+
+                    android:drawableStart="@drawable/icon_identification"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/kanit_light"
+                    android:hint="เลขประจำตัวประชาชน"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:padding="9dp" />
+
+                <com.santalu.maskedittext.MaskEditText
+                    android:id="@+id/Birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/bg_register"
+
+                    android:inputType="date"
+                    app:met_mask="##/##/####"
+                    android:digits="0123456789"
+
+                    android:drawableStart="@drawable/icon_birthday"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/kanit_light"
+                    android:hint="วันเกิด วว/ดด/ปปปป"
+                    android:imeOptions="actionNext"
+
                     android:maxLines="1"
                     android:padding="9dp" />
 
@@ -116,6 +173,8 @@
                     android:layout_marginRight="30dp"
                     android:background="@drawable/bg_register"
                     android:fontFamily="@font/kanit_light"
+                    android:drawableStart="@drawable/ic_home_black_24dp"
+                    android:drawablePadding="5dp"
                     android:hint="ที่อยู่"
                     android:imeOptions="actionNext"
                     android:inputType="text"
@@ -132,38 +191,12 @@
                     android:background="@drawable/bg_register"
                     android:digits="0123456789"
                     android:fontFamily="@font/kanit_light"
+                    android:drawableStart="@drawable/ic_call"
+                    android:drawablePadding="5dp"
                     android:hint="เบอร์โทร"
                     android:inputType="phone"
                     android:maxLines="1"
                     android:padding="9dp" />
-
-                <!--                <RadioGroup-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="15dp"-->
-                <!--                    android:layout_marginLeft="30dp"-->
-                <!--                    android:layout_marginRight="30dp"-->
-                <!--                    android:orientation="horizontal">-->
-                <!--                    <TextView-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:text="Account type: "-->
-                <!--                        android:textSize="16sp"/>-->
-                <!--                    <RadioButton-->
-                <!--                        android:id="@+id/radio_User"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_weight="1"-->
-                <!--                        android:text="User" />-->
-
-                <!--                    <RadioButton-->
-                <!--                        android:id="@+id/radio_Owner"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_weight="1"-->
-                <!--                        android:text="Owner" />-->
-
-                <!--                </RadioGroup>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -205,8 +238,8 @@
     <Button
         android:id="@+id/btregister"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#806699CC"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_r_event_detail"
         android:textSize="17sp"
         android:textStyle="bold"
         android:fontFamily="@font/kanit"

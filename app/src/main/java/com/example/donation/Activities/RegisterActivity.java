@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.donation.HomeActivity;
-import com.example.donation.MainMapActivity;
+import com.example.donation.MainMapsActivity;
 import com.example.donation.ModelClasses.UserRegister;
 import com.example.donation.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.santalu.maskedittext.MaskEditText;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -43,11 +44,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edPassword;
     private EditText edAddress;
     private EditText edPhonenumber;
-    //    private RadioButton radioUser, radioOwner;
     private Button btregister;
     private Spinner typeUserTv;
 
-//    String type = "";
+    private MaskEditText edBirthday, edIdCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         typeUserTv = (Spinner) findViewById(R.id.usergrope);
 
-//        radioUser = (RadioButton) findViewById(R.id.radio_User);
-//        radioOwner = (RadioButton) findViewById(R.id.radio_Owner);
+        edBirthday = findViewById(R.id.Birthday);
+        edIdCard = findViewById(R.id.IdCard);
 
         btregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,26 +85,31 @@ public class RegisterActivity extends AppCompatActivity {
                 String lastname = edLastname.getText().toString();
                 String phone = edPhonenumber.getText().toString();
                 String address = edAddress.getText().toString();
+                String birthday = edBirthday.getText().toString();
+                String idcard = edIdCard.getText().toString();
 
                 if (!email.matches("[a-zA-Z0-9._-]+[@]+[a-zA-Z]+[.]+[a-zA-Z.]+")) {
                     edEmail.setError("กรุณากรอกอีเมล");
+                } else if (pass.length() < 8 || pass.length() > 16) {
+                    edPassword.setError("กรุณากรอกรหัสผ่าน 8-16 ตัวอักษร");
                 } else if (firsname.matches("")) {
                     edFirsname.setError("กรุณากรอกชื่อผู้ใช้");
                 } else if (lastname.matches("")) {
                     edLastname.setError("กรุณากรอกนามสกุล");
-                } else if (pass.matches("")) {
-                    edPassword.setError("กรุณากรอกรหัสผ่าน");
+//                } else if (pass.matches("")) {
+//                    edPassword.setError("กรุณากรอกรหัสผ่าน");
+                } else if (idcard.length() < 17 || phone.length() > 17) {
+                    edIdCard.setError("กรุณากรอกเลขประจำตัวประชาชนให้ครบ 13 หลัก");
+                } else if (birthday.length() < 10 || phone.length() > 10) {
+                    edBirthday.setError("กรุณากรอกวัดเกิด");
                 } else if (address.matches("")) {
                     edAddress.setError("กรุณากรอกที่อยู่ ");
-                } else if (pass.length() < 8 || pass.length() > 16) {
-                    edPassword.setError("กรุณากรอกรหัส 8-16 ตัวอักษร");
                 } else if (phone.length() < 9 || phone.length() > 10) {
                     edPhonenumber.setError("กรุณากรอกเบอร์โทรศัพท์");
                 } else {
 //                     checkUserForm();
                     userRegister();
                 }
-
 
             }
 
@@ -129,10 +134,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
     private void showDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
-        progressDialog.setMessage("Wait...");
+        progressDialog.setMessage("รอสักครู่...");
     }
 
     private void hideDialog() {
@@ -164,18 +170,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 String addlastname = edLastname.getText().toString().trim();
                                 String addphone = edPhonenumber.getText().toString().trim();
                                 String addaddress = edAddress.getText().toString().trim();
-
-//                                if (radioUser.isChecked()) {
-//                                    type = "User";
-//                                }
-//                                if (radioOwner.isChecked()) {
-//                                    type = "Owner";
-//                                }
+                                String birthday = edBirthday.getText().toString().trim();
+                                String Identification = edIdCard.getText().toString().trim();
 
                                 String type = typeUserItemText;
 
                                 String id = auth.getCurrentUser().getUid();//databaseUserRegister.push().getKey();
-                                UserRegister user = new UserRegister(id, addemail, addpassword, addfirsname, addlastname, addphone, addaddress, type);
+                                UserRegister user = new UserRegister(id, addemail, addpassword, addfirsname, addlastname, addphone, addaddress, Identification, birthday,type);
                                 databaseUserRegister.child(id).setValue(user);
 
                                 databaseUserRegister.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -183,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String type = dataSnapshot.child("type").getValue().toString().trim();
                                         if (type.equals("Owner")) {
-                                            startActivity(new Intent(RegisterActivity.this, MainMapActivity.class));
+                                            startActivity(new Intent(RegisterActivity.this, MainMapsActivity.class));
                                             finish();
                                         } else if (type.equals("User")) {
                                             startActivity(new Intent(RegisterActivity.this, HomeActivity.class));

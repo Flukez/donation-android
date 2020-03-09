@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.donation.ModelClasses.Event;
+import com.example.donation.ModelClasses.ModelEventDetail;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot s : dataSnapshot.getChildren()){
-                    Event user = s.getValue(Event.class);
+                    ModelEventDetail user = s.getValue(ModelEventDetail.class);
                     LatLng location=new LatLng(Double.parseDouble(String.valueOf(user.latitude)),Double.parseDouble(String.valueOf(user.longitude)));
                     mMap.addMarker(new MarkerOptions().position(location).title(user.name)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5.0f));

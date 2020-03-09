@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Donation</string>
+    <string name="app_name">Donation</string>Donation
     <string name="title_activity_maps">Map</string>
 
     <!--    <string name="app_name">Firebase Auth</string>-->
@@ -11,9 +11,10 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="btn_login">LOGIN</string>
-    <string name="btn_link_to_register">Don\'t have an account? Sing up</string>
+    <string name="btn_link_to_register">ยังไม่มีบัญชีใช่ไหม ? สมัครสมาชิก</string>Don\'t have an
+    account? Sing up
     <string name="btn_link_to_login">already registered. login me!</string>
-    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_forgot_password">ลืมรหัสผ่านใช่หรือไม่</string>Forgot your password?
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back"><![CDATA[<< ย้อนกลับ]]></string>
     <string name="btn_sign_out">Sign Out</string>
@@ -24,13 +25,15 @@
     <string-array name="categorys">
         <item>วัดหรือศาสนาสถาน</item>
         <item>สถานสงเคราะห์</item>
-        <item>สถานสงเคราะห์</item>
-        <item>มูลนิธิต่าง ๆ</item>
         <item>ครอบครัวผู้ด้อยโอกาสและผู้ประสบอุทกภัย</item>
+        <item>มูลนิธิต่าง ๆ</item>
     </string-array>
 
     <string-array name="userGrope">
         <item>User</item>
         <item>Owner</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

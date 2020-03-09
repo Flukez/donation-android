@@ -115,10 +115,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:background="@null"
-            android:text="Don&apos;t have an account? Sing up"
+            android:text="@string/btn_link_to_register"
             android:textAllCaps="false"
             android:textColor="@color/btn_register"
             android:textSize="15sp" />
+        <!--            Don&apos;t have an account? Sing up-->
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -1,24 +1,19 @@
-package com.example.donation.View;
+package com.example.donation.ViewHoder;
 
 import android.content.Context;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donation.R;
-import com.squareup.picasso.Picasso;
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class ViewHolderPlace extends RecyclerView.ViewHolder {
 
     View mview;
 
-    public ViewHolder(@NonNull View itemView) {
+    public ViewHolderPlace(@NonNull View itemView) {
         super(itemView);
 
         mview = itemView;
@@ -42,23 +37,38 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setDetails(Context ctx, String name, String adress, String phonenumber) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
+    public void setDetails(Context ctx, String name, String adress, String phonenumber, Double avgRating, Integer numRating) { //String image ใช้กับคู่ Picasso.get().load(image).into(mImage);
 
         TextView mName = mview.findViewById(R.id.rName);
         TextView madress = mview.findViewById(R.id.rAdress);//add New
         TextView mphonenumber = mview.findViewById(R.id.rPhonenumber);//add New
+        TextView nurating = mview.findViewById(R.id.rAvg);
+        TextView numcomments = mview.findViewById(R.id.rNumberReview);
 
 //        ImageView mImage = mview.findViewById(R.id.rImage);
 
         mName.setText(name);
-        madress.setText(adress);//add New
-        mphonenumber.setText(phonenumber);//add New
+        madress.setText(adress);
+        mphonenumber.setText(phonenumber);
+
+        if (avgRating == null) {
+            nurating.setText("0");
+        } else {
+            nurating.setText(String.valueOf(avgRating));
+        }
+
+        if (numRating == null) {
+            numcomments.setText("0");
+        } else {
+            numcomments.setText(String.valueOf(numRating));
+        }
+
 
 //        Picasso.get().load(image).into(mImage);
 
     }
 
-    private ViewHolder.ClickListener mClickListener;
+    private ViewHolderPlace.ClickListener mClickListener;
 
 
     public interface ClickListener {
@@ -67,7 +77,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         void onItemLongClick(View view,int position);
     }
 
-    public void setOnClickListener(ViewHolder.ClickListener clickListener) {
+    public void setOnClickListener(ViewHolderPlace.ClickListener clickListener) {
 
         mClickListener = clickListener;
     }

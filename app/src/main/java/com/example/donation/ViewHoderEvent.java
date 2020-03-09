@@ -2,14 +2,10 @@ package com.example.donation;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.donation.View.ViewHolder;
-import com.squareup.picasso.Picasso;
 
 public class ViewHoderEvent extends RecyclerView.ViewHolder {
 

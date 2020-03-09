@@ -17,9 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:textSize="18dp"
         app:menu="@menu/bottom_navigation"
-        android:background="?android:attr/windowBackground"/>
-
-
+        android:background="#BE2196F3"/>@color/btn_donation #B22196F3
 
 </RelativeLayout>

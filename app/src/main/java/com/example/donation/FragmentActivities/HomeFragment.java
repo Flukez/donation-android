@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,8 @@ import com.example.donation.R;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private Button btnWat, btnHospital, btnVictim, btnFoundation;
+//    private Button btnWat, btnHospital , btnVictim, btnFoundation;
+    private ImageButton btnWat, btnHospital , btnVictim, btnFoundation;
 
     @Nullable
     @Override

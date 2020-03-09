@@ -1,6 +1,6 @@
 package com.example.donation.ModelClasses;
 
-public class Event {
+public class ModelEventDetail {
 
     public String name;
     public String address;
@@ -8,17 +8,19 @@ public class Event {
     public String latitude;
     public String longitude;
     public String category;
+    public Boolean status;
 
-    public Event(){
+    public ModelEventDetail(){
 
     }
-    public Event(String name, String address, String phonenumber, String latitude, String longitude, String category) {
+    public ModelEventDetail(String name, String address, String phonenumber, String latitude, String longitude, String category, Boolean status) {
         this.name=name;
         this.address=address;
         this.phonenumber=phonenumber;
         this.latitude=latitude;
         this.longitude=longitude;
         this.category=category;
+        this.status=status;
     }
 
     public String getName() {
@@ -67,6 +69,14 @@ public class Event {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
 }

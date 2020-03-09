@@ -4,11 +4,13 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C4CDE0"
     android:paddingLeft="16dp"
-    android:paddingTop="12dp"
+    android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
     tools:context=".Activities.User.PlaceActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,13 +26,14 @@
             android:layout_marginBottom="3dp"
             android:background="@drawable/bg_search_place"
             android:drawableStart="@drawable/ic_search_black_24dp"
-            android:hint="ค้นหาที่นี่"
-            android:imeOptions="actionNext"
+            android:hint="ค้นหาสถานที่"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

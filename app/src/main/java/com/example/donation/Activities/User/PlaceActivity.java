@@ -13,15 +13,14 @@ import android.widget.Filterable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donation.EventActivity;
 import com.example.donation.R;
-import com.example.donation.View.ModelPlace;
-import com.example.donation.View.ViewHolder;
+import com.example.donation.ViewHoder.ModelPlace;
+import com.example.donation.ViewHoder.ViewHolderPlace;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -68,8 +67,8 @@ public class PlaceActivity extends AppCompatActivity {
 
         showData();
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Place");
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle("Place");
 
         final EditText editText = findViewById(R.id.editTextSearch);
         editText.addTextChangedListener(new TextWatcher() {
@@ -122,7 +121,7 @@ public class PlaceActivity extends AppCompatActivity {
 
     }
 
-    class PlaceFirebaseAdapter extends FirebaseRecyclerAdapter<ModelPlace, ViewHolder> implements Filterable {
+    class PlaceFirebaseAdapter extends FirebaseRecyclerAdapter<ModelPlace, ViewHolderPlace> implements Filterable {
         List<ModelPlace> items;
         List<ModelPlace> filteredItems;
         boolean filter;
@@ -137,8 +136,8 @@ public class PlaceActivity extends AppCompatActivity {
                 if (charSequence == null || charSequence.length() == 0) {
                     filteredList.addAll(items);
                 } else {
-                    for (ModelPlace place: items) {
-                        if (place.getName().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                    for (ModelPlace place : items) {
+                        if (place.getName().toLowerCase().contains(charSequence.toString().toLowerCase()) && place.getStatus()) {
                             filteredList.add(place);
                         }
                     }
@@ -158,15 +157,15 @@ public class PlaceActivity extends AppCompatActivity {
             }
         };
 
-        @Override
-        public int getItemCount() {
-            return filteredItems.size();
-        }
-
         public PlaceFirebaseAdapter(@NonNull FirebaseRecyclerOptions<ModelPlace> options) {
             super(options);
             this.items = new ArrayList<>();
             this.filteredItems = new ArrayList<>();
+        }
+
+        @Override
+        public int getItemCount() {
+            return filteredItems.size();
         }
 
         @NonNull
@@ -181,24 +180,28 @@ public class PlaceActivity extends AppCompatActivity {
 
             if (!filter) {
                 this.filteredItems.clear();
-                this.filteredItems.addAll(this.items);
+                for (ModelPlace item : items) {
+                    if (item.getStatus()) {
+                        filteredItems.add(item);
+                    }
+                }
                 notifyDataSetChanged();
             }
         }
 
         @Override
-        protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull ModelPlace model) {
-            holder.setDetails(getApplicationContext(), model.getName(), model.getAddress(), model.getPhonenumber());//model.getImage()
+        protected void onBindViewHolder(@NonNull ViewHolderPlace holder, int position, @NonNull ModelPlace model) {
+            holder.setDetails(getApplicationContext(), model.getName(), model.getAddress(), model.getPhonenumber(), model.getAverageRating(), model.getCountRating());//model.getImage()
         }
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolderPlace onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.place, parent, false);
 
-            ViewHolder viewHolder = new ViewHolder(itemView);
-            viewHolder.setOnClickListener(new ViewHolder.ClickListener() {
+            ViewHolderPlace viewHolder = new ViewHolderPlace(itemView);
+            viewHolder.setOnClickListener(new ViewHolderPlace.ClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     DataSnapshot snapshot = getSnapshots().getSnapshot(position);

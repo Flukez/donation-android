@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.donation.Activities.LoginActivity;
-import com.example.donation.Activities.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +34,7 @@ public class LoadingHomeActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String type = dataSnapshot.child("type").getValue().toString().trim();
                     if (type.equals("Owner")) {
-                        Intent intent = new Intent(LoadingHomeActivity.this, MainMapActivity.class);
+                        Intent intent = new Intent(LoadingHomeActivity.this, MainMapsActivity.class);
 //                        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         finish();
