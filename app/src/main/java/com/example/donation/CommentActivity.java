@@ -143,6 +143,9 @@ public class CommentActivity extends AppCompatActivity {
                     commentRef.push().setValue(model);
                     Toast.makeText(CommentActivity.this, "โพสต์สำเร็จ", Toast.LENGTH_SHORT).show();
 
+                    // Clear
+                    mComment.setText("");
+
                 }else {
                     Toast.makeText(CommentActivity.this, "คุณเคยคอมเม้นไปแล้ว", Toast.LENGTH_SHORT).show();
                 }
